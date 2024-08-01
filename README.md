@@ -49,7 +49,7 @@ conda env create --name 3dvista --file=environments.yml
 
 2. install pointnet2
 ```
-cd vision/pointnet2
+cd model/vision/pointnet2
 python3 setup.py install
 ```
 ### Prepare dataset

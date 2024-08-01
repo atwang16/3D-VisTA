@@ -41,19 +41,19 @@ class ScanFamilyDatasetWrapper(torch.utils.data.Dataset):
         data_dict['obj_fts'] = self.pad_tensors(data_dict['obj_fts'], lens=self.max_obj_len, pad=1.0).float() # O, 1024, 6
         data_dict['obj_locs']= self.pad_tensors(data_dict['obj_locs'], lens=self.max_obj_len, pad=0.0).float() # O, 3
         data_dict['obj_boxes']= self.pad_tensors(data_dict['obj_boxes'], lens=self.max_obj_len, pad=0.0).float() # O, 3
-        data_dict['obj_labels'] = self.pad_tensors(data_dict['obj_labels'], lens=self.max_obj_len, pad=-100).long() # O
+        # data_dict['obj_labels'] = self.pad_tensors(data_dict['obj_labels'], lens=self.max_obj_len, pad=-100).long() # O
         # build sem mask, no mask
         data_dict['obj_sem_masks'] = (torch.arange(self.max_obj_len) < len(data_dict['obj_locs']))
         # build label for refer
-        data_dict['tgt_object_label'] = data_dict['tgt_object_label'].long() # 1 or C
-        data_dict['tgt_object_id'] = data_dict['tgt_object_id'].long() # 1 or O
-        if len(data_dict['tgt_object_id']) > 1: # O, pad to max objet length
-            data_dict['tgt_object_id'] = self.pad_tensors(data_dict['tgt_object_id'].long(), lens=self.max_obj_len, pad=0).long() # O
+        # data_dict['tgt_object_label'] = data_dict['tgt_object_label'].long() # 1 or C
+        # data_dict['tgt_object_id'] = data_dict['tgt_object_id'].long() # 1 or O
+        # if len(data_dict['tgt_object_id']) > 1: # O, pad to max objet length
+        #     data_dict['tgt_object_id'] = self.pad_tensors(data_dict['tgt_object_id'].long(), lens=self.max_obj_len, pad=0).long() # O
         # build target
-        if data_dict.get('tgt_object_id_iou25') != None:
-            data_dict['tgt_object_id_iou25'] = self.pad_tensors(data_dict['tgt_object_id_iou25'], lens=self.max_obj_len, pad=0).long()
-        if data_dict.get('tgt_object_id_iou50') != None:
-            data_dict['tgt_object_id_iou50'] = self.pad_tensors(data_dict['tgt_object_id_iou50'], lens=self.max_obj_len, pad=0).long()
+        # if data_dict.get('tgt_object_id_iou25') != None:
+        #     data_dict['tgt_object_id_iou25'] = self.pad_tensors(data_dict['tgt_object_id_iou25'], lens=self.max_obj_len, pad=0).long()
+        # if data_dict.get('tgt_object_id_iou50') != None:
+        #     data_dict['tgt_object_id_iou50'] = self.pad_tensors(data_dict['tgt_object_id_iou50'], lens=self.max_obj_len, pad=0).long()
         # build label for qa
         if "answer_label" in data_dict:
             data_dict['answer_label'] = data_dict['answer_label'].long() # N, C

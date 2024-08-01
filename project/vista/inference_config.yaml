@@ -6,12 +6,13 @@ pipeline:
   restore_model: True
 
   refer_dataset:
-    name: ovfgvg_task
+    name: scannetpp_task
     args:
+      scene_dir: /datasets/external/scannetpp/scannetpp
+      prompt_file: /localhome/atw7/projects/3d-ovfgvg/data/ovfgvg/test_prompts.csv
       tokenizer: bert_tokenizer
       txt_seq_length: 50
-      pc_seq_length: 80
-      pc_type: 'gt'
+      pc_seq_length: 250
 
   lang_encoder:
     name: bert_lang_encoder
@@ -30,9 +31,10 @@ pipeline:
       num_layers: 4
       dim_loc: 6
       pairwise_rel_type: center
-      mixup_strategy: linear_decay
-      mixup_stage1: 0.2
-      mixup_stage2: 0.4
+      # mixup_strategy: linear_decay
+      # mixup_stage1: 0.2
+      # mixup_stage2: 0.4
+      mixup_strategy: null
 
   unified_encoder:
     name: unified_encoder_v2
@@ -92,4 +94,5 @@ pipeline:
   unified_lr_mul: 1.0
   beta1: 0.9
   beta2: 0.98
+  output: "ovfgvg_results.json"
   
